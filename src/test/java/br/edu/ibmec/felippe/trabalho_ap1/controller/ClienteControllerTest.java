@@ -69,7 +69,7 @@ public class ClienteControllerTest {
         .post("/clientes")
         .content(this.mapper.writeValueAsString(cliente))
         .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(MockMvcResultMatchers.status().isOk())  // Status 200, pois ResponseEntity.ok() é usado
+        .andExpect(MockMvcResultMatchers.status().isOk()) 
         .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(0)))
         .andExpect(MockMvcResultMatchers.jsonPath("$.nome", is("Teste")));
   }
@@ -108,8 +108,6 @@ public class ClienteControllerTest {
   @Test
   public void should_delete_cliente() throws Exception {
     // Mock para remover cliente
-    doNothing().when(clienteService).removerCliente(1);
-
     this.mvc.perform(MockMvcRequestBuilders
         .delete("/clientes/1")
         .contentType(MediaType.APPLICATION_JSON))

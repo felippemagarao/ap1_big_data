@@ -56,10 +56,7 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerCliente(@PathVariable int id) {
-        if (clienteService.removerCliente(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+      clienteService.removerCliente(id); // Este método deve ser void
+      return ResponseEntity.noContent().build();
     }
 }
