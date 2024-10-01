@@ -61,9 +61,14 @@ public class ClienteService {
         return clienteRepository.save(clienteExistente);
     }
 
-    public void removerCliente(int id) {
-        clienteRepository.deleteById(id);
-    }
+    public boolean removerCliente(int id) {
+      Optional<Cliente> cliente = clienteRepository.findById(id);
+      if (cliente.isPresent()) {
+          clienteRepository.delete(cliente.get());
+          return true; 
+      }
+      return false;
+  }
 
     private boolean validarCliente(Cliente cliente) {
     if (!cliente.isMaiorDeIdade()) {
