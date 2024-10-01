@@ -6,6 +6,7 @@ import br.edu.ibmec.felippe.trabalho_ap1.exception.ClienteException;
 import br.edu.ibmec.felippe.trabalho_ap1.model.Cliente;
 import br.edu.ibmec.felippe.trabalho_ap1.repository.ClienteRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,5 +76,9 @@ public class ClienteService {
 
     private void validarAtualizacao(Cliente clienteAtualizado, Cliente clienteExistente) {
         
+    }
+
+    public List<Cliente> listarTodosClientes() {
+      return clienteRepository.findAll();
     }
 }

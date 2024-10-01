@@ -1,5 +1,6 @@
 package br.edu.ibmec.felippe.trabalho_ap1.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -31,10 +32,16 @@ public class ClienteController {
   }  
 
 
+  @GetMapping
+    public ResponseEntity<List<Cliente>> listarClientes() {
+        List<Cliente> clientes = clienteService.listarTodosClientes();
+        return ResponseEntity.ok(clientes);
+    }
+    
   @GetMapping("/{id}")
   public ResponseEntity<Optional<Cliente>> buscarCliente(@PathVariable int id) {
     Optional<Cliente> cliente = clienteService.buscarCliente(id);
-    if (cliente == null) {
+    if (cliente.isEmpty()) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     return ResponseEntity.ok(cliente);
@@ -43,15 +50,18 @@ public class ClienteController {
   @PostMapping
   public ResponseEntity<Cliente> adicionarCliente(@RequestBody Cliente cliente) throws Exception {
     Cliente novoCliente = clienteService.adicionarCliente(cliente);
-    return ResponseEntity.ok(novoCliente);
+    return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
 }
 
 
   @PutMapping("/{id}")
-  public Cliente atualizarCliente(@PathVariable int id, @RequestBody Cliente cliente){
-    return clienteService.atualizarCliente(id, cliente);
-
-  }
+  public ResponseEntity<Cliente> atualizarCliente(@PathVariable int id, @RequestBody Cliente cliente) {
+    if (!clienteService.buscarCliente(id).isPresent()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    Cliente clienteAtualizado = clienteService.atualizarCliente(id, cliente);
+    return ResponseEntity.ok(clienteAtualizado);
+}
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
