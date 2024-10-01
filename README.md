@@ -1,1 +1,7 @@
-# ap1_big_data
+# AP1 BIG DATA
+
+Nome: Jorge Felippe L Magarao
+
+Matricula: 202301284422 
+
+Prof. Rafael Cruz
